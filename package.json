@@ -1,0 +1,24 @@
+{
+  "name": "cantox",
+  "version": "1.0.0",
+  "description": "An input method for modern Cantonese",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cantonese"
+  ],
+  "author": "Ethan Wan Kong",
+  "license": "ISC",
+  "dependencies": {
+    "exceljs": "^0.2.11",
+    "express": "^4.14.0",
+    "firebase": "^3.2.0",
+    "xlsx-json": "^0.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-livereload": "^3.8.1"
+  }
+}

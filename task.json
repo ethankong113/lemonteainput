@@ -1,0 +1,9 @@
+[
+    {
+        "input": "words.xlsx",
+        "sheet": "Sheet1",
+        "range": "A1:B622",
+        "raw": true,
+        "output": "words.json"
+    }
+]

@@ -1,0 +1,64 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #ffde00;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+}
+
+body {
+  background-color: beige;
+  height: 700px;
+}
+
+.empty-row-sm {
+  width: 100%;
+  height: 10px;
+}
+
+.empty-row-lg {
+  width: 100%;
+  height: 100px;
+}
+
+.empty-row {
+  width: 100%;
+  height: 50px;
+}
+
+#text-input {
+  width: 100%;
+}
+
+.word-index {
+  background-color: brown;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 10px;
+}
+
+.arrow-sign {
+  color: brown;
+  font-size: 300%;
+}
+
+footer nav .container {
+  background-color: #ffde00;
+  width: 100%;
+  z-index: 10;
+}
+
+.footer-btn {
+  font-size: 300%;
+  color: beige;
+}
+
+.footer-btn:hover {
+  background-color: brown;
+  color: #ffde00;
+}

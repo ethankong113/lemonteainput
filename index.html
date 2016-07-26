@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Lemontea Input Method</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheet.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <header>
+    <nav>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2>Lemontea Input</h2>
+            <div class="empty-row-sm"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <body ng-controller="MainController">
+    <div class="empty-row-lg"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <form name="textform" id="textform">
+            <div class="input-group" id="text-input">
+              <input type="text" placeholder="type something here..." class="form-control" ng-model="textfield" name="textfield" ng-change="startInput(textfield)" ng-keydown="printWord($event, textform)" />
+            </div>
+          </form>
+          <div class="empty-row"></div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"><div class="space-for-arrow empty-row-lg"></div><div class="arrow-sign left-arrow"><span class="glyphicon glyphicon-circle-arrow-left"></span></div></div>
+        <div class="col-xs-8">
+          <ul class="list-group">
+            <li class="list-group-item wordchoices" ng-repeat="(key, item) in wordchoices" data-wordchoice="{{key}}"><span class="word-index">{{item.index}}</span>&nbsp;&nbsp;&nbsp;{{key}}&nbsp;{{item.key}}</li>
+          </ul>
+        </div>
+        <div class="col-xs-1"><div class="space-for-arrow empty-row-lg"></div><div class="arrow-sign right-arrow"><span class="glyphicon glyphicon-circle-arrow-right"></span></div></div>
+        <div class="col-xs-1"></div>
+      </div>
+    </div>
+    <div class="modal" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">關於檸檬茶輸入法</h4>
+          </div>
+          <div class="modal-body">
+            檸檬茶輸入法(Lemontea Input Method)是&nbsp;<a href="www.appappduck.com" target="_blank">AppAppDuck <span class="glyphicon glyphicon-new-window"></span></a>&nbsp;開發的免費開源項目。市面上的廣東話輸入法都是根據標準廣東話拼音製作而成，
+            但大部分粵語人士都未有學習過廣東話拼音，加上這些輸入法都並未加入香港潮語。有見及此，我們希望製作一個與時並進的廣東話輸入法，並希望藉著公開源代碼和字庫，
+            能發展出更方便快捷的輸入法。如果你對檸檬茶輸入法有任何改善的意見，可以發電郵致lemonteainput@gmail.com。<br /><br />
+            我們的源代碼可以在Github上找到:<br />
+            <br /><br />
+            有興趣免費學電腦編程，可以在Youtube上看&nbsp;<a href="https://www.youtube.com/channel/UCh_fSqDEyllIuhJo_bq23Cg" target="_blank">AppAppDuck的廣東話教學
+              <span class="glyphicon glyphicon-new-window"></span></a><br />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">分享檸檬茶輸入法</h4>
+          </div>
+          <div class="modal-body">
+            假如你喜歡檸檬茶輸入法，可以把我們的產品分享到你的社交媒體:
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="angular/angular.min.js"></script>
+    <script src="main.js"></script>
+    <script src="MainCtrl.js"></script>
+    <script src="http://localhost:35729/livereload.js"></script>
+  </body>
+  <footer>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-xs-3">
+          </div>
+          <div class="col-xs-3 footer-btn">
+            <div data-toggle="modal" data-target="#infoModal">
+              <div class="empty-row-sm"></div>
+              <span class="glyphicon glyphicon-info-sign"></span>
+            </div>
+          </div>
+          <div class="col-xs-3 footer-btn">
+            <div data-toggle="modal" data-target="#shareModal">
+              <div class="empty-row-sm"></div>
+              <span class="glyphicon glyphicon-share"></span>
+            </div>
+          </div>
+          <div class="col-xs-3">
+          </div>
+        </div>
+      </div>
+    </nav>
+  </footer>
+</html>
