@@ -2,7 +2,7 @@ angular.module('myApp')
   .controller('MainController', ['$scope', '$http', function($scope, $http){
 
     var oldQuery = "";
-    var searchWord = "";
+    var searchWord = [];
     var allowNumberKey = true;
     var wordData = {};
     var subWordData = {};
@@ -15,39 +15,35 @@ angular.module('myApp')
 
       function getNewChar(newWord, oldWord) {
         if (newWord.length > oldWord.length) {
-          for (var i = 0; i < newWord.length; i++) {
-            if (newWord[i] != oldWord[i]) {
-              return newWord[i]
-            }
-          }
+          return newWord[newWord.length-1];
         } else if (newWord.length < oldWord.length) {
-          return "Backspace"
+          return "Backspace";
         }
       }
       var newChar = getNewChar(query, oldQuery);
       oldQuery = query;
 
-      var alphaPatt = /[a-z]/i
-      if (newChar == "Backspace") {
-        searchWord = searchWord.slice(0, searchWord.length-1)
+      var alphaPatt = /[a-z]/i;
+      if (newChar === "Backspace") {
+        searchWord.pop();
       } else if (alphaPatt.test(newChar)) {
-        searchWord += newChar
+        searchWord.push(newChar);
       }
 
-      var numPatt = /[1-9]/
+      var numPatt = /[1-9]/;
       if (numPatt.test(newChar) === false) {
-        if (searchWord.length == 1) {
+        if (searchWord.length === 1) {
           $http({
             url: '/getdata',
             method: 'GET',
-            params: {key: searchWord}
+            params: {key: searchWord.join('')}
           }).then(function(results){
-            wordData = results.data
-            subWordData = {}
+            wordData = results.data;
+            subWordData = {};
             var indexNum = 1;
-            for (item in wordData) {
-              wordData[item].index = indexNum
-              indexNum++
+            for (var item in wordData) {
+              wordData[item].index = indexNum;
+              indexNum++;
             }
             subWordData = wordData
             wordChoices = {}
@@ -63,28 +59,23 @@ angular.module('myApp')
             }
             $scope.wordchoices = wordChoices;
             changeSpaceForArrowSigns(Object.keys(wordChoices).length);
-            if (Object.keys(subWordData).length > 9) {
-              changeColorForLeftArrow(false);
-              changeColorForRightArrow(true);
-            } else {
-              changeColorForLeftArrow(false);
-              changeColorForRightArrow(false);
-            }
-          })
+            changeColorForLeftArrow(Object.keys(subWordData).length <= 9);
+            changeColorForRightArrow(Object.keys(subWordData).length > 9);
+          });
         } else if (searchWord.length >= 2) {
-          subWordData = {}
-          wordChoices = {}
+          subWordData = {};
+          wordChoices = {};
           startPoint = 1;
-          var patt = new RegExp('^' + searchWord.toUpperCase())
+          var patt = new RegExp('^' + searchWord.join('').toUpperCase());
           var indexNum = 1;
-          for (word in wordData) {
+          for (var word in wordData) {
             if (patt.test(wordData[word].key)) {
-              subWordData[word] = {key: wordData[word].key, ranking: wordData[word].ranking, index: indexNum}
-              indexNum++
+              subWordData[word] = {key: wordData[word].key, ranking: wordData[word].ranking, index: indexNum};
+              indexNum++;
             }
           }
-          var wordIndex = 1
-          for (word in subWordData) {
+          var wordIndex = 1;
+          for (var word in subWordData) {
             wordChoices[word] = {key: subWordData[word].key, ranking: subWordData[word].ranking, index: wordIndex}
             wordIndex++
             if (subWordData[word].index >= 9) {
@@ -94,28 +85,23 @@ angular.module('myApp')
           }
           $scope.wordchoices = wordChoices;
           changeSpaceForArrowSigns(Object.keys(wordChoices).length);
-          if (Object.keys(subWordData).length > 9) {
-            changeColorForLeftArrow(false);
-            changeColorForRightArrow(true);
-          } else {
-            changeColorForLeftArrow(false);
-            changeColorForRightArrow(false);
-          }
-        } else if (searchWord == "") {
-          $scope.wordchoices = ""
-          wordData = {}
-          subWordData = {}
-          wordChoices = {}
+          changeColorForLeftArrow(false);
+          changeColorForRightArrow(Object.keys(subWordData).length > 9);
+        } else {
+          $scope.wordchoices = "";
+          wordData = {};
+          subWordData = {};
+          wordChoices = {};
           startPoint = 1;
           changeColorForLeftArrow(false);
           changeColorForRightArrow(false);
         }
       } else if (numPatt.test(newChar) === true && allowNumberKey === false) {
-        originalString = originalString.replace(searchWord, document.getElementsByClassName('wordchoices')[pressedKey-1].getAttribute('data-wordchoice'))
+        originalString = originalString.replace(searchWord.join(''), document.getElementsByClassName('wordchoices')[pressedKey-1].getAttribute('data-wordchoice'))
         $scope.textfield = originalString
         oldQuery = originalString
         $scope.wordchoices = ""
-        searchWord = ""
+        searchWord = [];
         originalString = ""
         pressedKey = 0
         allowNumberKey = true;
